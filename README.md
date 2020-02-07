@@ -21,7 +21,20 @@ sudo yum install htop
 sudo yum install emacs
 ```
 
+htop keyboard commands: s, l, H
+https://www.cyberciti.biz/faq/how-to-install-htop-on-centos-linux-8/
+
 ## Install Tweaks
+
+In GUI:
+Software \ Search tweaks \ GNOME Tweaks \ Install
+
+In CLI:
+
+```
+sudo yum install gnome-tweak-tool
+```
+More: https://linuxhint.com/tweaking_gnome_desktop_centos8/
 
 ## Keyboard: Swap CapsLock & Ctrl
 
@@ -59,11 +72,16 @@ sudo firewall-cmd ––reload
 Each virtual host has a separate conf file in /etc/httpd/conf.d/.
 Logs are in /var/www/html in a separate folders.
 
-More: https://phoenixnap.com/kb/install-apache-on-centos-7
+More:
+https://phoenixnap.com/kb/install-apache-on-centos-7
+https://www.tecmint.com/monitor-apache-web-server-load-and-page-statistics/
 
 After reconfig do not forget:
 
 ```
+httpd -t
 sudo systemctl restart httpd
 ```
-Apache status: https://www.tecmint.com/monitor-apache-web-server-load-and-page-statistics/
+Apache status:
+http://localhost/server-status?refresh=2
+https://www.tecmint.com/monitor-apache-web-server-load-and-page-statistics/
