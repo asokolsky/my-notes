@@ -94,6 +94,11 @@ http://httpd.apache.org/docs/current/misc/perf-tuning.html
 
 https://serverfault.com/questions/383526/how-do-i-select-which-apache-mpm-to-use
 
+To gracefully restart Apache:
+```
+apache2ctl -k graceful
+```
+
 ## Kernel
 
 To make those changes persisent, edit  /etc/sysctl.conf
