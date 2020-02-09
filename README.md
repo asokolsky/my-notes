@@ -22,6 +22,7 @@ sudo yum install emacs
 ```
 
 htop keyboard commands: s, l, H
+
 https://www.cyberciti.biz/faq/how-to-install-htop-on-centos-linux-8/
 
 ## Install Tweaks
@@ -74,6 +75,7 @@ Logs are in /var/www/html in a separate folders.
 
 More:
 https://phoenixnap.com/kb/install-apache-on-centos-7
+
 https://www.tecmint.com/monitor-apache-web-server-load-and-page-statistics/
 
 After reconfig do not forget:
@@ -84,6 +86,7 @@ sudo systemctl restart httpd
 ```
 Apache status:
 http://localhost/server-status?refresh=2
+
 https://www.tecmint.com/monitor-apache-web-server-load-and-page-statistics/
 
 Apache performance optimization:
@@ -109,12 +112,30 @@ cat /proc/sys/vm/swappiness
 ```
 
 ### Adjusting Cache
-Allow more dirty pages, less dirty cache:
+
+For iO serer is makes sense allow more dirty pages, less dirty cache:
 
 https://youtu.be/7dkSze52i-o?t=1607
+
 https://lonesysadmin.net/2013/12/22/better-linux-disk-caching-performance-vm-dirty_ratio/
 
 ```
 vm.dirty_background_ratio = 5
 vm.dirty_ratio = 80
 ```
+
+## Java
+
+It's all about GC. At least Java 7 update 51.
+
+Choose Garbage First (G1) Collector
+
+* set the heap size;
+* set target GC pause time.
+
+https://youtu.be/7dkSze52i-o?t=1771
+
+
+
+
+
