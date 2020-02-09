@@ -61,7 +61,48 @@ Alternatively:
 ```
 More: http://www.noah.org/wiki/CapsLock_Remap_Howto
 
-## Apache Custmization
+## Kernel Tuning
+
+To make those changes persisent, edit  /etc/sysctl.conf
+
+### No Swapping
+
+To set it:
+
+```
+sudo sysctl vm.swappiness=10
+
+```
+Check it
+```
+cat /proc/sys/vm/swappiness
+```
+
+### Adjusting Cache
+
+For iO serer is makes sense allow more dirty pages, less dirty cache:
+
+https://youtu.be/7dkSze52i-o?t=1607
+
+https://lonesysadmin.net/2013/12/22/better-linux-disk-caching-performance-vm-dirty_ratio/
+
+```
+vm.dirty_background_ratio = 5
+vm.dirty_ratio = 80
+```
+
+## Java Tuning
+
+It's all about GC. At least Java 7 update 51.
+
+Choose Garbage First (G1) Collector
+
+* set the heap size;
+* set target GC pause time.
+
+https://youtu.be/7dkSze52i-o?t=1771
+
+## Apache Customization
 
 To start service:
 ```
@@ -94,7 +135,6 @@ https://phoenixnap.com/kb/install-apache-on-centos-7
 https://www.tecmint.com/monitor-apache-web-server-load-and-page-statistics/
 
 After reconfig do not forget:
-
 ```
 httpd -t
 sudo systemctl restart httpd
@@ -113,44 +153,3 @@ To gracefully restart Apache:
 ```
 apache2ctl -k graceful
 ```
-
-## Kernel
-
-To make those changes persisent, edit  /etc/sysctl.conf
-
-### No Swapping
-
-To set it:
-
-```
-sudo sysctl vm.swappiness=10
-
-```
-Check it
-```
-cat /proc/sys/vm/swappiness
-```
-
-### Adjusting Cache
-
-For iO serer is makes sense allow more dirty pages, less dirty cache:
-
-https://youtu.be/7dkSze52i-o?t=1607
-
-https://lonesysadmin.net/2013/12/22/better-linux-disk-caching-performance-vm-dirty_ratio/
-
-```
-vm.dirty_background_ratio = 5
-vm.dirty_ratio = 80
-```
-
-## Java
-
-It's all about GC. At least Java 7 update 51.
-
-Choose Garbage First (G1) Collector
-
-* set the heap size;
-* set target GC pause time.
-
-https://youtu.be/7dkSze52i-o?t=1771
