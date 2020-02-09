@@ -8,6 +8,8 @@ sudo yum upgrade
 ```
 ## Add EPEL repo
 
+Add EPEL repo:
+
 ```
 sudo yum -y install epel-release
 sudo yum repolist
@@ -15,17 +17,24 @@ sudo yum repolist
 
 ## Install Favorite Packages
 
+### Emacs
+
+```
+sudo yum install emacs
+```
+
+### HTOP
+
 ```
 sudo yum search htop
 sudo yum install htop
-sudo yum install emacs
 ```
 
 htop keyboard commands: s, l, H
 
 https://www.cyberciti.biz/faq/how-to-install-htop-on-centos-linux-8/
 
-## Install Tweaks
+### Gnome Tweaks
 
 In GUI:
 Software \ Search tweaks \ GNOME Tweaks \ Install
@@ -37,7 +46,12 @@ sudo yum install gnome-tweak-tool
 ```
 More: https://linuxhint.com/tweaking_gnome_desktop_centos8/
 
-## Keyboard: Swap CapsLock & Ctrl
+### Apache
+```
+sudo yum install httpd
+```
+
+## Customize Keyboard: Swap CapsLock & Ctrl
 
 In Tweaks: Keyabord & Mouse\ Ctrl Position \ Swap Ctrl & CapsLock
 
@@ -47,9 +61,10 @@ Alternatively:
 ```
 More: http://www.noah.org/wiki/CapsLock_Remap_Howto
 
-## Install Apache
+## Apache Custmization
+
+To start service:
 ```
-sudo yum install httpd
 sudo systemctl start httpd
 ```
 
@@ -57,6 +72,7 @@ To ensure httpd starts on power-up:
 ```
 sudo systemctl enable httpd
 ```
+
 Check status:
 ```
 sudo systemctl status httpd
@@ -68,7 +84,6 @@ sudo firewall-cmd ––permanent ––add-port=80/tcp
 sudo firewall-cmd ––permanent ––add-port=443/tcp
 sudo firewall-cmd ––reload
 ```
-## Configure Apache
 
 Each virtual host has a separate conf file in /etc/httpd/conf.d/.
 Logs are in /var/www/html in a separate folders.
@@ -139,8 +154,3 @@ Choose Garbage First (G1) Collector
 * set target GC pause time.
 
 https://youtu.be/7dkSze52i-o?t=1771
-
-
-
-
-
