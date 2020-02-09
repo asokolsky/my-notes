@@ -85,3 +85,10 @@ sudo systemctl restart httpd
 Apache status:
 http://localhost/server-status?refresh=2
 https://www.tecmint.com/monitor-apache-web-server-load-and-page-statistics/
+
+Apache performance optimization:
+http://httpd.apache.org/docs/current/misc/perf-tuning.html
+
+https://serverfault.com/questions/383526/how-do-i-select-which-apache-mpm-to-use
+
+
