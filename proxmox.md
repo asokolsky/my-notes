@@ -1,13 +1,17 @@
 # ProxMox HOWTO
 
+## Container Manipulation
+
 List containers:
 ```
  pct list
 ```
-Enter into a container (without password):
+Start and enter into a container (without password):
 ```
+ pct start VMID
  pct enter VMID
 ```
+
 ## Container Templates
 ```
  pveam update
