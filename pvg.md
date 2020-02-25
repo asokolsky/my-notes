@@ -1,4 +1,4 @@
-# Installing Prometheus, Victoriametrics Grafana
+# Installing Prometheus, Victoriametrics, Grafana
 
 ## Install Prometheus with node_exporter
 
