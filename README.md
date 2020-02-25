@@ -46,11 +46,6 @@ sudo yum install gnome-tweak-tool
 ```
 More: https://linuxhint.com/tweaking_gnome_desktop_centos8/
 
-### Apache
-```
-sudo yum install httpd
-```
-
 ## Customize Keyboard: Swap CapsLock & Ctrl
 
 In Tweaks: Keyabord & Mouse\ Ctrl Position \ Swap Ctrl & CapsLock
