@@ -50,9 +50,10 @@ More: https://linuxhint.com/tweaking_gnome_desktop_centos8/
 ```
 sudo yum install httpd
 ```
-### Prometheus with Victoriametrics
+### Prometheus with node_exporter and Victoriametrics
 
 Fllow https://www.fosslinux.com/10398/how-to-install-and-configure-prometheus-on-centos-7.htm
+or rather https://www.linuxtechi.com/install-prometheus-monitoring-tool-centos-8-rhel-8/
 
 Then https://copr.fedorainfracloud.org/coprs/antonpatsev/VictoriaMetrics/
 
