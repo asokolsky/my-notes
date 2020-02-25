@@ -7,6 +7,8 @@ https://www.fosslinux.com/10398/how-to-install-and-configure-prometheus-on-cento
 
 For CENTOS8
 https://www.linuxtechi.com/install-prometheus-monitoring-tool-centos-8-rhel-8/
+or
+https://computingforgeeks.com/how-to-install-prometheus-on-rhel-8/
 
 ## Install Victoriametrics
 
