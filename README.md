@@ -50,6 +50,12 @@ More: https://linuxhint.com/tweaking_gnome_desktop_centos8/
 ```
 sudo yum install httpd
 ```
+### Prometheus with Victoriametrics
+
+Fllow https://www.fosslinux.com/10398/how-to-install-and-configure-prometheus-on-centos-7.htm
+
+Then https://copr.fedorainfracloud.org/coprs/antonpatsev/VictoriaMetrics/
+
 
 ## Customize Keyboard: Swap CapsLock & Ctrl
 
