@@ -46,6 +46,14 @@ sudo yum install gnome-tweak-tool
 ```
 More: https://linuxhint.com/tweaking_gnome_desktop_centos8/
 
+## Install More Fonts
+
+```
+yum install fontconfig
+yum install freetype*
+yum install urw-fonts
+```
+
 ## Customize Keyboard: Swap CapsLock & Ctrl
 
 In Tweaks: Keyabord & Mouse\ Ctrl Position \ Swap Ctrl & CapsLock
