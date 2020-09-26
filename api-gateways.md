@@ -68,7 +68,10 @@ https://github.com/devopsfaith/krakend
 major open sorce API gateway after Kong.
 [Docs](https://tyk.io/docs/).
 
-Datastore: [Redis](https://redis.io/)
+Datastore: MongoDB, [Redis](https://redis.io/)
+
+Installing on [RedHat](https://tyk.io/docs/getting-started/installation/with-tyk-on-premises/redhat-rhel-centos/),
+[Ubuntu](https://tyk.io/docs/getting-started/installation/with-tyk-on-premises/on-ubuntu/).
 
 ## Comparison
 
