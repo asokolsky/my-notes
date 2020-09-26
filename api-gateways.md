@@ -14,7 +14,7 @@ Stacks well against Kong performance-wise.
 
 [API Umbrella](https://github.com/NREL/api-umbrella)
 
-[Architecure](https://api-umbrella.readthedocs.io/en/latest/developer/architecture.html)
+[Architecture](https://api-umbrella.readthedocs.io/en/latest/developer/architecture.html)
 
 ## AWS API Gateway
 
@@ -65,7 +65,7 @@ https://github.com/devopsfaith/krakend
 ## Tyk
 
 [Tyk](https://github.com/TykTechnologies/tyk) is a second
-major open sorce API gateway after Kong.
+major open source API gateway after Kong.
 [Docs](https://tyk.io/docs/).
 
 Datastore: MongoDB, [Redis](https://redis.io/)
