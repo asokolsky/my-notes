@@ -24,6 +24,8 @@ Stacks well against Kong performance-wise.
 
 [Architecture](https://api-umbrella.readthedocs.io/en/latest/developer/architecture.html)
 
+Does not seem to command much of a mindshare...
+
 ## AWS API Gateway
 
 [AWS API Gateway](https://aws.amazon.com/api-gateway/) is NOT open source.
@@ -83,8 +85,12 @@ Installing on [RedHat](https://tyk.io/docs/getting-started/installation/with-tyk
 
 ## Comparison
 
-https://www.moesif.com/blog/technical/api-gateways/How-to-Choose-The-Right-API-Gateway-For-Your-Platform-Comparison-Of-Kong-Tyk-Apigee-And-Alternatives/#summary
-https://www.bbva.com/en/api-gateways-kong-vs-tyk/ -
+[How to Choose the Right API Gateway](https://www.moesif.com/blog/technical/api-gateways/How-to-Choose-The-Right-API-Gateway-For-Your-Platform-Comparison-Of-Kong-Tyk-Apigee-And-Alternatives/#summary)
+
+[Kong vs Tyk](https://www.bbva.com/en/api-gateways-kong-vs-tyk/) -
 data presented heavily disputed.
-https://www.popularowl.com/reviews/which-api-gateway/
-https://www.predictiveanalyticstoday.com/top-api-management-platforms/
+
+[Which API Gateway)[https://www.popularowl.com/reviews/which-api-gateway/)
+
+
+[API Management Platforms](https://www.predictiveanalyticstoday.com/top-api-management-platforms/)
