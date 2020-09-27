@@ -90,7 +90,7 @@ Installing on [RedHat](https://tyk.io/docs/getting-started/installation/with-tyk
 [Kong vs Tyk](https://www.bbva.com/en/api-gateways-kong-vs-tyk/) -
 data presented heavily disputed.
 
-[Which API Gateway)[https://www.popularowl.com/reviews/which-api-gateway/)
+[Which API Gateway](https://www.popularowl.com/reviews/which-api-gateway/)
 
 
 [API Management Platforms](https://www.predictiveanalyticstoday.com/top-api-management-platforms/)
