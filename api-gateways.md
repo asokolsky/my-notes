@@ -1,5 +1,13 @@
 # API Gateways
 
+After creating more than one REST service, I start to wonder whether it is worth having something other than
+bare NGINX in front.  Possible goals:
+
+* throttling;
+* authentication & authorization.
+
+Let's see what's there available...
+
 ## APIGee
 
 [APIGee](https://cloud.google.com/apigee/) was founded in 2004 and acquired by Google in 2016.
