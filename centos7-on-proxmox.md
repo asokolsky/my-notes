@@ -22,4 +22,6 @@ Start the VM.  Do install. Reboot.
 Setup network:
 https://lintut.com/how-to-setup-network-after-rhelcentos-7-minimal-installation/
 
+## OS Customization
 
+As described in other files in this repository.
