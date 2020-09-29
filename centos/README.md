@@ -95,6 +95,15 @@ Complete!
 
 ```
 
+But then
+
+```
+[alex@localhost tmp]$ sudo systemctl start qemu-guest-agent
+A dependency job for qemu-guest-agent.service failed. See 'journalctl -xe' for details.
+```
+
+Resolved by VM reboot.
+
 ## Install More Fonts
 
 ```
