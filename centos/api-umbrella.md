@@ -142,4 +142,4 @@ tcp    LISTEN     0      128       *:8080                  *:*                  
 tcp    LISTEN     0      128    127.0.0.1:14001                 *:*                   users:(("mongod",pid=2867,fd=5))
 ```
 
-Event after this http://192.168.1.151:8080 or https://192.168.1.151:8443 are not responding.
+Even after this http://192.168.1.151:8080 or https://192.168.1.151:8443 are not responding.
