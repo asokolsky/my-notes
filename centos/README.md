@@ -74,6 +74,27 @@ sudo yum install gnome-tweak-tool
 ```
 More: https://linuxhint.com/tweaking_gnome_desktop_centos8/
 
+## Services
+
+In general to start/stop :
+https://ma.ttias.be/start-or-stop-a-service-on-centos-7/
+
+### Firewall
+
+```
+[alex@centos7 ~]$ sudo firewall-cmd --state
+[sudo] password for alex:
+running
+[alex@centos7 ~]$
+[alex@centos7 ~]$ sudo systemctl stop firewalld
+```
+If you are really sure:
+```
+[alex@centos7 ~]$ sudo systemctl disable firewalld
+Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
+```
+
 ### Qemu Guest Package
 
 If this is a VM, follow through on this: https://pve.proxmox.com/wiki/Qemu-guest-agent
