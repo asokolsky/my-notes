@@ -1,4 +1,6 @@
-# Install API Umbrella on CentOS7
+# API Umbrella on CentOS7
+
+## Install
 
 Follow instructions from https://apiumbrella.io/install/
 
@@ -55,3 +57,89 @@ Complete!
 [alex@localhost tmp]$ sudo /etc/init.d/api-umbrella start
 Starting api-umbrella (via systemctl):                     [  OK  ]
 ```
+
+## Configuration
+
+It seems that out of the box api-umbrella runs on localhost only.
+
+```
+[root@localhost init.d]# sudo /etc/init.d/api-umbrella stop
+Stopping api-umbrella (via systemctl):  ^[[60G[  OK  ]
+[root@localhost init.d]# ss -4nlp
+Netid  State      Recv-Q Send-Q Local Address:Port               Peer Address:Port
+udp    UNCONN     0      0         *:68                    *:*                   users:(("dhclient",pid=781,fd=6))
+udp    UNCONN     0      0      127.0.0.1:323                   *:*                   users:(("chronyd",pid=630,fd=5))
+tcp    LISTEN     0      128       *:22                    *:*                   users:(("sshd",pid=971,fd=3))
+tcp    LISTEN     0      100    127.0.0.1:25                    *:*                   users:(("master",pid=1412,fd=13))
+[root@localhost init.d]# sudo /etc/init.d/api-umbrella start
+Starting api-umbrella (via systemctl):  ^[[60G[  OK  ]
+[root@localhost init.d]# ss -4nlp
+Netid  State      Recv-Q Send-Q Local Address:Port               Peer Address:Port
+udp    UNCONN     0      0         *:68                    *:*                   users:(("dhclient",pid=781,fd=6))
+udp    UNCONN     0      0      127.0.0.1:323                   *:*                   users:(("chronyd",pid=630,fd=5))
+tcp    LISTEN     0      128    127.0.0.1:14004                 *:*                   users:(("mora",pid=2454,fd=3))
+tcp    LISTEN     0      128       *:22                    *:*                   users:(("sshd",pid=971,fd=3))
+tcp    LISTEN     0      128    127.0.0.1:14009                 *:*                   users:(("[TS_MAIN]",pid=2588,fd=7),("traffic_manager",pid=2460,fd=7))
+tcp    LISTEN     0      100    127.0.0.1:25                    *:*                   users:(("master",pid=1412,fd=13))
+tcp    LISTEN     0      128    127.0.0.1:14010                 *:*                   users:(("nginx",pid=2524,fd=4),("nginx",pid=2523,fd=4),("nginx",pid=2456,fd=4))
+tcp    LISTEN     0      128       *:443                   *:*                   users:(("nginx",pid=2524,fd=6),("nginx",pid=2523,fd=6),("nginx",pid=2456,fd=6))
+tcp    LISTEN     0      128    127.0.0.1:14012                 *:*                   users:(("nginx",pid=2524,fd=9),("nginx",pid=2523,fd=9),("nginx",pid=2456,fd=9))
+tcp    LISTEN     0      128    127.0.0.1:14013                 *:*                   users:(("nginx",pid=2524,fd=10),("nginx",pid=2523,fd=10),("nginx",pid=2456,fd=10))
+tcp    LISTEN     0      55     127.0.0.1:14014                 *:*                   users:(("rsyslogd",pid=2458,fd=4))
+tcp    LISTEN     0      128       *:80                    *:*                   users:(("nginx",pid=2524,fd=5),("nginx",pid=2523,fd=5),("nginx",pid=2456,fd=5))
+tcp    LISTEN     0      128    127.0.0.1:14001                 *:*                   users:(("mongod",pid=2452,fd=5))
+```
+
+System configuration is done via /etc/api-umbrella/api-umbrella.yml and is described
+in few sections starting here: https://api-umbrella.readthedocs.io/en/latest/server/admin-auth.html
+
+```
+[root@localhost init.d]# sudo /etc/init.d/api-umbrella stop
+Stopping api-umbrella (via systemctl):  ^[[60G[  OK  ]
+[root@localhost init.d]# cat /etc/api-umbrella/api-umbrella.yml
+http_port: 8080
+https_port: 8443
+services:
+  - general_db
+  - log_db
+  - router
+  - web
+web:
+  admin:
+    initial_superusers:
+      - alex
+    auth_strategies:
+      enabled:
+        - local
+    username_is_email: false
+    password_length_min: 4
+    password_length_max: 72
+elasticsearch:
+  hosts:
+    - http://127.0.0.1:14002
+mongodb:
+  url: mongodb://127.0.0.1:14001/api_umbrella
+nginx:
+  workers: 4
+gatekeeper:
+  workers: 4
+[root@localhost init.d]# sudo /etc/init.d/api-umbrella start
+Starting api-umbrella (via systemctl):  ^[[60G[  OK  ]
+[root@localhost init.d]# ss -4nlp
+Netid  State      Recv-Q Send-Q Local Address:Port               Peer Address:Port
+udp    UNCONN     0      0         *:68                    *:*                   users:(("dhclient",pid=781,fd=6))
+udp    UNCONN     0      0      127.0.0.1:323                   *:*                   users:(("chronyd",pid=630,fd=5))
+tcp    LISTEN     0      128    127.0.0.1:14004                 *:*                   users:(("mora",pid=2869,fd=3))
+tcp    LISTEN     0      128       *:22                    *:*                   users:(("sshd",pid=971,fd=3))
+tcp    LISTEN     0      128    127.0.0.1:14009                 *:*                   users:(("[TS_MAIN]",pid=3018,fd=7),("traffic_manager",pid=2875,fd=7))
+tcp    LISTEN     0      100    127.0.0.1:25                    *:*                   users:(("master",pid=1412,fd=13))
+tcp    LISTEN     0      128    127.0.0.1:14010                 *:*                   users:(("nginx",pid=2934,fd=4),("nginx",pid=2933,fd=4),("nginx",pid=2932,fd=4),("nginx",pid=2931,fd=4),("nginx",pid=2871,fd=4))
+tcp    LISTEN     0      128       *:8443                  *:*                   users:(("nginx",pid=2934,fd=6),("nginx",pid=2933,fd=6),("nginx",pid=2932,fd=6),("nginx",pid=2931,fd=6),("nginx",pid=2871,fd=6))
+tcp    LISTEN     0      128    127.0.0.1:14012                 *:*                   users:(("nginx",pid=2934,fd=9),("nginx",pid=2933,fd=9),("nginx",pid=2932,fd=9),("nginx",pid=2931,fd=9),("nginx",pid=2871,fd=9))
+tcp    LISTEN     0      128    127.0.0.1:14013                 *:*                   users:(("nginx",pid=2934,fd=10),("nginx",pid=2933,fd=10),("nginx",pid=2932,fd=10),("nginx",pid=2931,fd=10),("nginx",pid=2871,fd=10))
+tcp    LISTEN     0      55     127.0.0.1:14014                 *:*                   users:(("rsyslogd",pid=2873,fd=4))
+tcp    LISTEN     0      128       *:8080                  *:*                   users:(("nginx",pid=2934,fd=5),("nginx",pid=2933,fd=5),("nginx",pid=2932,fd=5),("nginx",pid=2931,fd=5),("nginx",pid=2871,fd=5))
+tcp    LISTEN     0      128    127.0.0.1:14001                 *:*                   users:(("mongod",pid=2867,fd=5))
+```
+
+Event after this http://192.168.1.151:8080 or https://192.168.1.151:8443 are not responding.
