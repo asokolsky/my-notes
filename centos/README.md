@@ -48,8 +48,52 @@ More: https://linuxhint.com/tweaking_gnome_desktop_centos8/
 
 ### Qemu Guest Package
 
-If this is a VM, follow through on this:
-https://pve.proxmox.com/wiki/Qemu-guest-agent
+If this is a VM, follow through on this: https://pve.proxmox.com/wiki/Qemu-guest-agent
+
+```
+[alex@localhost tmp]$ sudo yum install qemu-guest-agent
+[sudo] password for alex:
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: repo.miserver.it.umich.edu
+ * epel: packages.oit.ncsu.edu
+ * extras: mirror.netdepot.com
+ * updates: mirror.siena.edu
+Resolving Dependencies
+--> Running transaction check
+---> Package qemu-guest-agent.x86_64 10:2.12.0-3.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+============================================================================================================================
+ Package                            Arch                     Version                           Repository              Size
+============================================================================================================================
+Installing:
+ qemu-guest-agent                   x86_64                   10:2.12.0-3.el7                   base                   116 k
+
+Transaction Summary
+============================================================================================================================
+Install  1 Package
+
+Total download size: 116 k
+Installed size: 297 k
+Is this ok [y/d/N]: y
+Downloading packages:
+qemu-guest-agent-2.12.0-3.el7.x86_64.rpm                                                             | 116 kB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 10:qemu-guest-agent-2.12.0-3.el7.x86_64                                                                  1/1
+  Verifying  : 10:qemu-guest-agent-2.12.0-3.el7.x86_64                                                                  1/1
+
+Installed:
+  qemu-guest-agent.x86_64 10:2.12.0-3.el7
+
+Complete!
+
+```
 
 ## Install More Fonts
 
