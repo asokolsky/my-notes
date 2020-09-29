@@ -46,7 +46,7 @@ sudo yum install gnome-tweak-tool
 ```
 More: https://linuxhint.com/tweaking_gnome_desktop_centos8/
 
-## Qemu Guest Package
+### Qemu Guest Package
 
 If this is a VM, follow through on this:
 https://pve.proxmox.com/wiki/Qemu-guest-agent
