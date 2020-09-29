@@ -15,6 +15,34 @@ sudo yum -y install epel-release
 sudo yum repolist
 ```
 
+## Hostname
+```
+[alex@localhost ~]$ sudo hostnamectl
+   Static hostname: localhost.localdomain
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: 18e2b166881a4ccba32acabd8ecd37c3
+           Boot ID: 67a2d29b9e0f4b8fb4f8a920129e7d6b
+    Virtualization: kvm
+  Operating System: CentOS Linux 7 (Core)
+       CPE OS Name: cpe:/o:centos:centos:7
+            Kernel: Linux 3.10.0-1127.19.1.el7.x86_64
+      Architecture: x86-64
+[alex@localhost ~]$ sudo hostnamectl set-hostname centos7
+[alex@localhost ~]$ sudo hostnamectl
+   Static hostname: centos7
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: 18e2b166881a4ccba32acabd8ecd37c3
+           Boot ID: 67a2d29b9e0f4b8fb4f8a920129e7d6b
+    Virtualization: kvm
+  Operating System: CentOS Linux 7 (Core)
+       CPE OS Name: cpe:/o:centos:centos:7
+            Kernel: Linux 3.10.0-1127.19.1.el7.x86_64
+      Architecture: x86-64
+[alex@localhost ~]$
+```
+
 ## Install Favorite Packages
 
 ### Emacs
