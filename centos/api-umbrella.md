@@ -142,4 +142,28 @@ tcp    LISTEN     0      128       *:8080                  *:*                  
 tcp    LISTEN     0      128    127.0.0.1:14001                 *:*                   users:(("mongod",pid=2867,fd=5))
 ```
 
-Even after this http://192.168.1.151:8080 or https://192.168.1.151:8443 are not responding.
+Even after this http://192.168.1.151:8080 or https://192.168.1.151:8443 are not responding - turning firewall off helped.
+
+## Use
+
+### Admin Login
+
+There are various admin authentication mechanisms supported.
+https://api-umbrella.readthedocs.io/en/latest/server/admin-auth.html
+
+My server is deployed on a LAN with no public IP.
+Local authentication with initial_superusers did not work as expected.
+
+
+### API Key Signup
+
+The outcome of teh signup is:
+
+API Key Signup
+
+Your API key for asokolsky@gmail.com is:
+e93CdhL6iHAJlrLgWAuEFjMCg3PAm5SwPnhDpKIj
+
+You can start using this key to make web service requests. Simply pass your key in the URL when making a web request. Here's an example:
+
+/example.json?api_key=e93CdhL6iHAJlrLgWAuEFjMCg3PAm5SwPnhDpKIj
