@@ -1,5 +1,9 @@
 # API Umbrella on CentOS7
 
+Big picture:
+https://github.com/NREL/api-umbrella/wiki/Deployment
+
+
 ## Install
 
 Follow instructions from https://apiumbrella.io/install/
@@ -152,7 +156,7 @@ There are various admin authentication mechanisms supported.
 https://api-umbrella.readthedocs.io/en/latest/server/admin-auth.html
 
 My server is deployed on a LAN with no public IP.
-Local authentication with initial_superusers did not work as expected.
+Local authentication with an account in initial_superusers did not work as expected.
 
 
 ### API Key Signup
