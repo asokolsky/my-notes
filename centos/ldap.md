@@ -69,68 +69,81 @@ By now we have LDAP but not LDAPS running.
 [The archived version](https://directory.fedoraproject.org/docs/389ds/howto/howto-ssl-archive.html)
 of the above doc is better suited for the test environment.
 
-I followed [instructions](https://serverfault.com/questions/404742/setting-up-ssl-with-389-directory-server-for-ldap-authentication):
+I followed [instructions](https://serverfault.com/questions/404742/setting-up-ssl-with-389-directory-server-for-ldap-authentication)
+but failed.
 
-1. Create a self-signed CA certificate:
+Instead I followed [these](https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/):
 
-```
-[root@centos7 slapd-centos7]# certutil -S -n "Alex CA Certificate" -s "cn=centos7.local, dc=local" -2 -x -t "CT,," -m 1000 -v 120 -d . -k rsa
+1. Create your own certificate authority.
 
-A random seed must be generated that will be used in the
-creation of your key.  One of the easiest ways to create a
-random seed is to use the timing of keystrokes on a keyboard.
-
-To begin, type keys on the keyboard until this progress meter
-is full.  DO NOT USE THE AUTOREPEAT FUNCTION ON YOUR KEYBOARD!
-
-
-Continue typing until the progress meter is full:
-
-Finished.  Press enter to continue:
-
-
-Generating key.  This may take a few moments...
-
-Is this a CA certificate [y/N]? y
-Enter the path length constraint, enter to skip [<0 for unlimited path]: > 0
-Is this a critical extension [y/N]? y
-```
-2. Create an LDAPS certificate:
+Generate private key:
 
 ```
-[root@centos7 slapd-centos7]# certutil -S -n "LDAPS Certificate" -s "cn=centos7.local" -c "Alex CA Certificate" -t "u,u,u" -m 1001 -v 120 -d . -k rsa
-
-A random seed must be generated that will be used in the
-creation of your key.  One of the easiest ways to create a
-random seed is to use the timing of keystrokes on a keyboard.
-
-To begin, type keys on the keyboard until this progress meter
-is full.  DO NOT USE THE AUTOREPEAT FUNCTION ON YOUR KEYBOARD!
-
-
-Continue typing until the progress meter is full:
-
-Finished.  Press enter to continue:
-
-Generating key.  This may take a few moments...
-
-Notice: Trust flag u is set automatically if the private key is present.
+alex@L07A97UF:~$ openssl genrsa -des3 -out sokolskyCA.key 2048
+Generating RSA private key, 2048 bit long modulus (2 primes)
+.................................................+++++
+............................+++++
+e is 65537 (0x010001)
+Enter pass phrase for sokolskyCA.key:
+Verifying - Enter pass phrase for sokolskyCA.key:
 ```
-3. In the 389 Managment Console:
 
-* select Directory Server, Open
-* tab Tasks/Manage Sertificates
+Generate a CA root certificate:
+```
+alex@L07A97UF:~$ openssl req -x509 -new -nodes -key sokolskyCA.key -sha256 -days 1825 -out sokolskyCA.pem
+Enter pass phrase for sokolskyCA.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:California
+Locality Name (eg, city) []:Campbell
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:HomeLAB
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:Alex Sokolsky
+Email Address []:asokolsky@gmail.com
+```
 
-You should the certificate in Server Certificates tab
+Install this CA using 389 console.
 
-4. Enable TLS encryption
+2. Create certificate signed by your CA
 
-In the 389 Managment Console directory server configuration:
+Create a CSR file centos7.local.csr using the 389 Console.
 
-* tab Encryption, select newly generated LDAPS Certificate
-* OK
 
-Console warns about the need to import the entire chain, otherwise the server will not start.
+Create a config file ldaps.ext defining the Subject Alternative Name (SAN) extension:
+```
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = dev.deliciousbrains.com
+```
+
+Next we create a certificate using:
+
+* the certificate request centos7.local.csr
+* CA private key sokolskyCA.key
+* CA certificate sokolskyCA.pem
+* config file ldaps.ext
+
+```
+alex@L07A97UF:~$ openssl x509 -req -in ldaps.csr -CA sokolskyCA.pem -CAkey sokolskyCA.key -CAcreateserial -out centos7.local.crt -days 825 -sha256 -extfile ldaps.ext
+Signature ok
+subject=C = US, ST = California, L = Campbell, O = HomeLAB, CN = centos7.local, emailAddress = asokolsky@gmail.com
+Getting CA Private Key
+Enter pass phrase for sokolskyCA.key:
+```
+
+Install the certificate centos7.local.crt usine the console app.
+
+Use console app to configure directory server to use encryption using the installed certificate.
 
 
 ## 389 Server Management
