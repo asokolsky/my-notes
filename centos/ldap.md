@@ -8,7 +8,9 @@ ping fiji.local
 ```
 ## 389 Server Installation
 
-I used Fedora 389 server and followed 
+I used 
+[Fedora 389 server](https://en.wikipedia.org/wiki/389_Directory_Server)
+and followed 
 [these instructions](https://webhostinggeeks.com/howto/setup-389-directory-server-on-centos-7/).
 Once the server is running, you should be able to access
 389® Administration Express at http://<host>:9830/dist/download
