@@ -64,6 +64,75 @@ tcp6       0      0 [::]:ldap               [::]:*                  LISTEN      
 tcp6       0      0 :::389                  :::*                    LISTEN      902/ns-slapd
 ```
 
+By now we have LDAP but not LDAPS running.  
+[Enable TLS now](https://directory.fedoraproject.org/docs/389ds/howto/howto-ssl.html).
+[The archived version](https://directory.fedoraproject.org/docs/389ds/howto/howto-ssl-archive.html)
+of the above doc is better suited for the test environment.
+
+I followed [instructions](https://serverfault.com/questions/404742/setting-up-ssl-with-389-directory-server-for-ldap-authentication):
+
+1. Create a self-signed CA certificate:
+
+```
+[root@centos7 slapd-centos7]# certutil -S -n "Alex CA Certificate" -s "cn=centos7.local, dc=local" -2 -x -t "CT,," -m 1000 -v 120 -d . -k rsa
+
+A random seed must be generated that will be used in the
+creation of your key.  One of the easiest ways to create a
+random seed is to use the timing of keystrokes on a keyboard.
+
+To begin, type keys on the keyboard until this progress meter
+is full.  DO NOT USE THE AUTOREPEAT FUNCTION ON YOUR KEYBOARD!
+
+
+Continue typing until the progress meter is full:
+
+Finished.  Press enter to continue:
+
+
+Generating key.  This may take a few moments...
+
+Is this a CA certificate [y/N]? y
+Enter the path length constraint, enter to skip [<0 for unlimited path]: > 0
+Is this a critical extension [y/N]? y
+```
+2. Create an LDAPS certificate:
+
+```
+[root@centos7 slapd-centos7]# certutil -S -n "LDAPS Certificate" -s "cn=centos7.local" -c "Alex CA Certificate" -t "u,u,u" -m 1001 -v 120 -d . -k rsa
+
+A random seed must be generated that will be used in the
+creation of your key.  One of the easiest ways to create a
+random seed is to use the timing of keystrokes on a keyboard.
+
+To begin, type keys on the keyboard until this progress meter
+is full.  DO NOT USE THE AUTOREPEAT FUNCTION ON YOUR KEYBOARD!
+
+
+Continue typing until the progress meter is full:
+
+Finished.  Press enter to continue:
+
+Generating key.  This may take a few moments...
+
+Notice: Trust flag u is set automatically if the private key is present.
+```
+3. In the 389 Managment Console:
+
+* select Directory Server, Open
+* tab Tasks/Manage Sertificates
+
+You should the certificate in Server Certificates tab
+
+4. Enable TLS encryption
+
+In the 389 Managment Console directory server configuration:
+
+* tab Encryption, select newly generated LDAPS Certificate
+* OK
+
+Console warns about the need to import the entire chain, otherwise the server will not start.
+
+
 ## 389 Server Management
 
 [Instructions](https://www.unixmen.com/manage-389-directory-server-graphically-using-389-management-console/).
@@ -74,7 +143,7 @@ On my Windows laptop I installed Java and then
 Possible alternative would be 
 [ldp](https://www.active-directory-security.com/2016/06/ldp-for-active-directory-download-usage-tutorial-and-examples.html)
 
-# Verification
+## Verification
 
 Once organizational units and new users are defined, test it like this:
 
@@ -163,6 +232,6 @@ result: 0 Success
 Finally, to test authentication against LDAP:
 
 ```
-
+sdsds
 
 ```
