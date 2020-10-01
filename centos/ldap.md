@@ -54,9 +54,11 @@ Sep 30 21:25:11 centos7.local systemd[1]: Started 389 Directory Server centos7..
 [alex@centos7 ~]$
 ```
 
-To verify the install:
+Check that ports 389 and 9830 are bound by the processes:
 ```
-[root@centos7 api-umbrella]# netstat -lp|grep ldap
+[root@centos7 api-umbrella]# netstat -lpn|grep 9830
+tcp        0      0 0.0.0.0:9830            0.0.0.0:*               LISTEN      1650/httpd
+[[root@centos7 api-umbrella]# netstat -lp|grep ldap
 tcp6       0      0 [::]:ldap               [::]:*                  LISTEN      902/ns-slapd
 [root@centos7 api-umbrella]# netstat -lpn|grep lap
 tcp6       0      0 :::389                  :::*                    LISTEN      902/ns-slapd
