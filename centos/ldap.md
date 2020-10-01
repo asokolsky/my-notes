@@ -17,5 +17,5 @@ Once the server is running, you should be able to access
 
 [Instructions](https://www.unixmen.com/manage-389-directory-server-graphically-using-389-management-console/).
 
-On my Windows laptop I installed Java and then 389 Management Console from
-https://directory.fedoraproject.org/docs/389ds/releases/release-windows-console-1-1-15.html
+On my Windows laptop I installed Java and then
+[389 Management Console](https://directory.fedoraproject.org/docs/389ds/releases/release-windows-console-1-1-15.html).
