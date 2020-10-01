@@ -4,7 +4,7 @@ Before you begin make sure sure the server where LDAP will be installed has a DN
 usually localdomain on home LAN.  I used domain local.
 Verify by pinging a host by a FQDN, e.g. 
 ```
-ping fiji.local
+ping fuji.local
 ```
 ## 389 Server Installation
 
