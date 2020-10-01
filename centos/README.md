@@ -1,20 +1,5 @@
 # Customizing CENTOS Install
 
-## Update the Install
-
-```
-sudo yum update
-sudo yum upgrade
-```
-## Add EPEL repo
-
-Add EPEL repo:
-
-```
-sudo yum -y install epel-release
-sudo yum repolist
-```
-
 ## Hostname
 ```
 [alex@localhost ~]$ sudo hostnamectl
@@ -43,7 +28,30 @@ sudo yum repolist
 [alex@localhost ~]$
 ```
 
+## Update the Install
+
+```
+sudo yum update
+sudo yum upgrade
+```
+## Add EPEL repo
+
+Add EPEL repo:
+
+```
+sudo yum -y install epel-release
+sudo yum repolist
+```
+
 ## Install Favorite Packages
+
+### nettools
+
+For things like netstat:
+
+```
+yum install net-tools
+```
 
 ### Emacs
 
