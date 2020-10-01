@@ -54,6 +54,14 @@ Sep 30 21:25:11 centos7.local systemd[1]: Started 389 Directory Server centos7..
 [alex@centos7 ~]$
 ```
 
+To verify the install:
+```
+[root@centos7 api-umbrella]# netstat -lp|grep ldap
+tcp6       0      0 [::]:ldap               [::]:*                  LISTEN      902/ns-slapd
+[root@centos7 api-umbrella]# netstat -lpn|grep lap
+tcp6       0      0 :::389                  :::*                    LISTEN      902/ns-slapd
+```
+
 ## 389 Server Management
 
 [Instructions](https://www.unixmen.com/manage-389-directory-server-graphically-using-389-management-console/).
