@@ -64,6 +64,8 @@ tcp6       0      0 [::]:ldap               [::]:*                  LISTEN      
 tcp6       0      0 :::389                  :::*                    LISTEN      902/ns-slapd
 ```
 
+## Certificates for CA and the server
+
 By now we have LDAP but not LDAPS running.  
 [Enable TLS now](https://directory.fedoraproject.org/docs/389ds/howto/howto-ssl.html).
 [The archived version](https://directory.fedoraproject.org/docs/389ds/howto/howto-ssl-archive.html)
@@ -110,6 +112,21 @@ Email Address []:asokolsky@gmail.com
 
 Install this CA using 389 console.
 
+Install this CA into the Linux (centos7) server:
+```
+  /etc/pki/ca-trust/source/anchors:
+  total used in directory 4 available 26388536
+  drwxr-xr-x. 2 root root   29 Oct  1 19:53 .
+  drwxr-xr-x. 4 root root   80 Sep 29 17:18 ..
+  -rw-r--r--  1 root root 1415 Oct  1 19:53 asokolskyCA.pem
+```
+then
+```
+[root@centos7 anchors]# update-ca-trust
+```
+
+Verify that /etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt has it.
+
 2. Create certificate signed by your CA
 
 Create a CSR file centos7.local.csr using the 389 Console.
@@ -144,6 +161,38 @@ Enter pass phrase for sokolskyCA.key:
 Install the certificate centos7.local.crt usine the console app.
 
 Use console app to configure directory server to use encryption using the installed certificate.
+
+Then restart the directory server:
+```
+[alex@centos7 ~]$ sudo systemctl restart dirsrv@centos7
+[alex@centos7 ~]$ sudo systemctl status dirsrv@centos7
+● dirsrv@centos7.service - 389 Directory Server centos7.
+   Loaded: loaded (/usr/lib/systemd/system/dirsrv@.service; enabled; vendor preset: disabled)
+   Active: active (running) since Thu 2020-10-01 19:25:08 EDT; 1min 19s ago
+  Process: 22371 ExecStartPre=/usr/sbin/ds_systemd_ask_password_acl /etc/dirsrv/slapd-%i/dse.ldif (code=exited, status=0/SUCCESS)
+ Main PID: 22377 (ns-slapd)
+   Status: "slapd started: Ready to process requests"
+   CGroup: /system.slice/system-dirsrv.slice/dirsrv@centos7.service
+           └─22377 /usr/sbin/ns-slapd -D /etc/dirsrv/slapd-centos7 -i /var/run/dirsrv/slapd-centos7.pid
+
+Oct 01 19:25:08 centos7.local ns-slapd[22377]: [01/Oct/2020:19:25:08.018166347 -0400] - INFO - attrcrypt_cipher_init - Key for cipher AES successfully generated and stored
+Oct 01 19:25:08 centos7.local ns-slapd[22377]: [01/Oct/2020:19:25:08.020218062 -0400] - ERR - attrcrypt_cipher_init - No symmetric key found for cipher 3DES in backend userRoot, attempting to create one...
+Oct 01 19:25:08 centos7.local ns-slapd[22377]: [01/Oct/2020:19:25:08.024669362 -0400] - INFO - attrcrypt_cipher_init - Key for cipher 3DES successfully generated and stored
+Oct 01 19:25:08 centos7.local ns-slapd[22377]: [01/Oct/2020:19:25:08.027581726 -0400] - ERR - attrcrypt_cipher_init - No symmetric key found for cipher AES in backend NetscapeRoot, attempting to create one...
+Oct 01 19:25:08 centos7.local ns-slapd[22377]: [01/Oct/2020:19:25:08.032187117 -0400] - INFO - attrcrypt_cipher_init - Key for cipher AES successfully generated and stored
+Oct 01 19:25:08 centos7.local ns-slapd[22377]: [01/Oct/2020:19:25:08.034343082 -0400] - ERR - attrcrypt_cipher_init - No symmetric key found for cipher 3DES in backend NetscapeRoot, attempting to create one...
+Oct 01 19:25:08 centos7.local ns-slapd[22377]: [01/Oct/2020:19:25:08.039119021 -0400] - INFO - attrcrypt_cipher_init - Key for cipher 3DES successfully generated and stored
+Oct 01 19:25:08 centos7.local ns-slapd[22377]: [01/Oct/2020:19:25:08.098767193 -0400] - INFO - slapd_daemon - slapd started.  Listening on All Interfaces port 389 for LDAP requests
+Oct 01 19:25:08 centos7.local ns-slapd[22377]: [01/Oct/2020:19:25:08.108321762 -0400] - INFO - slapd_daemon - Listening on All Interfaces port 636 for LDAPS requests
+Oct 01 19:25:08 centos7.local systemd[1]: Started 389 Directory Server centos7..
+```
+
+Check that LDAPS port is indeed bound:
+```
+[alex@centos7 ~]$ sudo netstat -lp|grep slap
+tcp6       0      0 [::]:ldaps              [::]:*                  LISTEN      22377/ns-slapd
+tcp6       0      0 [::]:ldap               [::]:*                  LISTEN      22377/ns-slapd
+```
 
 
 ## 389 Server Management
@@ -245,6 +294,7 @@ result: 0 Success
 Finally, to test authentication against LDAP:
 
 ```
-sdsds
-
+[alex@centos7 ~]$ ldapsearch -D "uid=asokolsky,dc=local" -o ldif-wrap=no -b "dc=local"  -W uid=asokolsky
+Enter LDAP Password:
+ldap_bind: Invalid credentials (49)
 ```
