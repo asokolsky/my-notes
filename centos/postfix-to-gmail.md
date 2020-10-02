@@ -66,4 +66,8 @@ Complete!
 
 ## Configure Postfix
 
+Just follow the instructions above.
 
+## Test the Relay
+
+Just follow the instructions above.
