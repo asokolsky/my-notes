@@ -59,5 +59,11 @@ Installed:
   mailx.x86_64 0:12.5-19.el7
 
 Complete!
+
+[root@centos7 api-umbrella]# systemctl restart postfix
+[root@centos7 api-umbrella]# systemctl enable postfix
 ```
+
+## Configure Postfix
+
 
