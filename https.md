@@ -32,6 +32,9 @@ https://requests.readthedocs.io/en/master/user/advanced/#ssl-cert-verification
 
 ## HTTPS Client with a Certificate to HTTPS Server
 
+Need to associate a client certificate AND a private key
+with a session:
+
 ```
 ses = requests.Session()
 ses.verify = '/path/to/CAs'
