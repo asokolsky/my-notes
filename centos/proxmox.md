@@ -42,8 +42,9 @@ watch -n 1 sensors
 ## GPU Pass Through
 
 Sources:
-https://pve.proxmox.com/wiki/Pci_passthrough
-https://www.youtube.com/watch?reload=9&v=fgx3NMk6F54
+
+* https://pve.proxmox.com/wiki/Pci_passthrough
+* https://www.youtube.com/watch?reload=9&v=fgx3NMk6F54
 
 Edit grub, then:
 
@@ -147,4 +148,13 @@ root@fuji:~# lspci
 05:00.0 VGA compatible controller: NVIDIA Corporation GK208 [GeForce GT 710B] (rev a1)
 05:00.1 Audio device: NVIDIA Corporation GK208 HDMI/DP Audio Controller (rev a1)
 ```
+
+Prevent host from using GT710:
+```
+echo "blacklist radeon" >> /etc/modprobe.d/blacklist.conf 
+echo "blacklist nouveau" >> /etc/modprobe.d/blacklist.conf 
+echo "blacklist nvidia" >> /etc/modprobe.d/blacklist.conf 
+```
+
+reboot
 
