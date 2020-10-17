@@ -121,3 +121,30 @@ root@fuji:~# lspci
 05:00.0 Ethernet controller: Intel Corporation I350 Gigabit Network Connection (rev 01)
 05:00.1 Ethernet controller: Intel Corporation I350 Gigabit Network Connection (rev 01)
 ```
+
+After VGA install:
+```
+root@fuji:~# lspci
+00:00.0 Host bridge: Intel Corporation Xeon E3-1200 v6/7th Gen Core Processor Host Bridge/DRAM Registers (rev 05)
+00:01.0 PCI bridge: Intel Corporation Skylake PCIe Controller (x16) (rev 05)
+00:14.0 USB controller: Intel Corporation Sunrise Point-H USB 3.0 xHCI Controller (rev 31)
+00:14.2 Signal processing controller: Intel Corporation Sunrise Point-H Thermal subsystem (rev 31)
+00:16.0 Communication controller: Intel Corporation Sunrise Point-H CSME HECI #1 (rev 31)
+00:16.1 Communication controller: Intel Corporation Sunrise Point-H CSME HECI #2 (rev 31)
+00:17.0 SATA controller: Intel Corporation Sunrise Point-H SATA controller [AHCI mode] (rev 31)
+00:1c.0 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #5 (rev f1)
+00:1c.5 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #6 (rev f1)
+00:1c.6 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #7 (rev f1)
+00:1c.7 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #8 (rev f1)
+00:1f.0 ISA bridge: Intel Corporation Sunrise Point-H LPC Controller (rev 31)
+00:1f.2 Memory controller: Intel Corporation Sunrise Point-H PMC (rev 31)
+00:1f.4 SMBus: Intel Corporation Sunrise Point-H SMBus (rev 31)
+01:00.0 Non-Volatile memory controller: Phison Electronics Corporation E12 NVMe Controller (rev 01)
+02:00.0 Display controller: Emulex Corporation ServerView iRMC HTI (rev 05)
+02:00.1 Co-processor: Emulex Corporation ServerView iRMC HTI
+03:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+04:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
+05:00.0 VGA compatible controller: NVIDIA Corporation GK208 [GeForce GT 710B] (rev a1)
+05:00.1 Audio device: NVIDIA Corporation GK208 HDMI/DP Audio Controller (rev a1)
+```
+
