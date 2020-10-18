@@ -158,3 +158,42 @@ echo "blacklist nvidia" >> /etc/modprobe.d/blacklist.conf
 
 reboot
 
+Note that GT710 (pci device 05:00:0x) has a dedicated iommu group:
+
+```
+root@fuji:~# find /sys/kernel/iommu_groups/ -type l
+/sys/kernel/iommu_groups/7/devices/0000:00:1c.6
+/sys/kernel/iommu_groups/5/devices/0000:00:1c.0
+/sys/kernel/iommu_groups/13/devices/0000:05:00.1
+/sys/kernel/iommu_groups/13/devices/0000:05:00.0
+/sys/kernel/iommu_groups/3/devices/0000:00:16.0
+/sys/kernel/iommu_groups/3/devices/0000:00:16.1
+/sys/kernel/iommu_groups/11/devices/0000:03:00.0
+/sys/kernel/iommu_groups/1/devices/0000:00:01.0
+/sys/kernel/iommu_groups/1/devices/0000:01:00.0
+/sys/kernel/iommu_groups/8/devices/0000:00:1c.7
+/sys/kernel/iommu_groups/6/devices/0000:00:1c.5
+/sys/kernel/iommu_groups/4/devices/0000:00:17.0
+/sys/kernel/iommu_groups/12/devices/0000:04:00.0
+/sys/kernel/iommu_groups/2/devices/0000:00:14.2
+/sys/kernel/iommu_groups/2/devices/0000:00:14.0
+/sys/kernel/iommu_groups/10/devices/0000:02:00.0
+/sys/kernel/iommu_groups/10/devices/0000:02:00.1
+/sys/kernel/iommu_groups/0/devices/0000:00:00.0
+/sys/kernel/iommu_groups/9/devices/0000:00:1f.2
+/sys/kernel/iommu_groups/9/devices/0000:00:1f.0
+/sys/kernel/iommu_groups/9/devices/0000:00:1f.4
+```
+
+Edit VM Hardware - set:
+
+* Machine: q35;
+* Add EFI disk;
+* BIOS: OVMF;
+* Add PCI device, select GT710, check allfunctions, primary VGA, PCIe;
+* Did not add associated HDMI audio yet
+
+Start VM.  The above change in BIOS rendered the HD unbootable - I reinstalled centos8.
+
+
+
