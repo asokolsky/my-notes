@@ -195,5 +195,12 @@ Edit VM Hardware - set:
 
 Start VM.  The above change in BIOS rendered the HD unbootable - I reinstalled centos8.
 
+Then:
+```
+root@fuji:~# qm monitor 200
+Entering Qemu Monitor for VM 200 - type 'help' for help
+qm> info pci
+
+```
 
 
