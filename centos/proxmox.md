@@ -1,5 +1,65 @@
 # ProxMox HOWTO
 
+## Update repositories
+
+You will get an error during the update:
+```
+Err:4 https://enterprise.proxmox.com/debian/pve buster InRelease
+  401  Unauthorized [IP: 144.217.225.162 443]
+```
+
+It comes from /etc/apt/sources.list.d/pve-enterprise.list:
+```
+root@pve02:/etc/apt/sources.list.d# cat pve-enterprise.list 
+deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise
+```
+
+Change it to:
+```
+root@pve02:/etc/apt/sources.list.d# cat pve-enterprise.list
+# deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise
+```
+And then:
+```
+root@pve02:/etc/apt# cat sources.list
+deb http://ftp.us.debian.org/debian buster main contrib
+
+deb http://ftp.us.debian.org/debian buster-updates main contrib
+
+# security updates
+deb http://security.debian.org buster/updates main contrib
+
+# PVE pve-no-subscription repository provided by proxmox.com,
+# NOT recommended for production use
+deb http://download.proxmox.com/debian/pve buster pve-no-subscription
+```
+
+## Disable IPv6
+
+Edit the /etc/sysctl.conf file to disable it for all the adapters
+
+```
+net.ipv6.conf.all.disable_ipv6 = 1
+```
+For a particular adapter enp0s3:
+
+```
+net.ipv6.conf.enp0s3.disable_ipv6 = 1
+```
+
+## Install ifupdown2
+
+```
+sssss
+```
+
+## Install lm-sensors
+
+```
+apt install lm-sensors
+sensors-detect
+watch -n 1 sensors
+```
 ## Container Manipulation
 
 List containers:
@@ -17,26 +77,6 @@ Start and enter into a container (without password):
  pveam update
  pveam available
  pveam download local ubuntu-18.10-standard_18.10-2_amd64.tar.gz
-```
-
-## Disable IPv6
-
-Edit the /etc/sysctl.conf file to disable it for all the adapters
-
-```
-net.ipv6.conf.all.disable_ipv6 = 1
-```
-For a particular adapter enp0s3:
-
-```
-net.ipv6.conf.enp0s3.disable_ipv6 = 1
-```
-## Install lm-sensors
-
-```
-apt install lm-sensors
-sensors-detect
-watch -n 1 sensors
 ```
 
 ## GPU Pass Through
