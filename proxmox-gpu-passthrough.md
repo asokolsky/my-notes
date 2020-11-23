@@ -3,9 +3,12 @@
 Sources:
 
 * https://pve.proxmox.com/wiki/Pci_passthrough
+* https://www.reddit.com/r/homelab/comments/b5xpua/the_ultimate_beginners_guide_to_gpu_passthrough/
 * https://www.youtube.com/watch?reload=9&v=fgx3NMk6F54
 
-Edit grub, then:
+## Grub Kernel Boot Command Line
+
+Edit grub for IOMMU, update grub, reboot, then:
 
 ```
 root@fuji:~# dmesg | grep -e DMAR -e IOMMU
@@ -23,6 +26,8 @@ root@fuji:~# dmesg | grep -e DMAR -e IOMMU
 [    0.653745] DMAR: dmar0: Using Queued invalidation
 [    0.655720] DMAR: Intel(R) Virtualization Technology for Directed I/O
 ```
+
+## VFIO Modules
 
 Edit /etc/modules:
 ```
@@ -46,8 +51,9 @@ irqbypass              16384  2 vfio_pci,kvm
 vfio_iommu_type1       32768  0
 vfio                   32768  2 vfio_iommu_type1,vfio_pci
 ```
+## IOMMU Interrupt Remapping
 
-Verifying remapping is enabled:
+Verify remapping is enabled:
 
 ```
 root@fuji:~# dmesg | grep 'remapping'
@@ -107,6 +113,7 @@ root@fuji:~# lspci
 05:00.0 VGA compatible controller: NVIDIA Corporation GK208 [GeForce GT 710B] (rev a1)
 05:00.1 Audio device: NVIDIA Corporation GK208 HDMI/DP Audio Controller (rev a1)
 ```
+## Blacklist Drivers
 
 Prevent host from using GT710:
 ```
@@ -116,6 +123,8 @@ echo "blacklist nvidia" >> /etc/modprobe.d/blacklist.conf
 ```
 
 reboot
+
+# Add GPU to VFIO
 
 Note that GT710 (pci device 05:00:0x) has a dedicated iommu group:
 
@@ -143,6 +152,8 @@ root@fuji:~# find /sys/kernel/iommu_groups/ -type l
 /sys/kernel/iommu_groups/9/devices/0000:00:1f.0
 /sys/kernel/iommu_groups/9/devices/0000:00:1f.4
 ```
+
+# VM Configuration
 
 Edit VM Hardware - set:
 
