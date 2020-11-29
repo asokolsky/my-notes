@@ -1,5 +1,10 @@
 # ProxMox HOWTO
 
+## Sources
+
+* my experience
+* https://www.youtube.com/watch?v=GoZaMgEgrHw
+
 ## Update repositories
 
 You will get an error during the update:
@@ -46,6 +51,33 @@ For a particular adapter enp0s3:
 ```
 net.ipv6.conf.enp0s3.disable_ipv6 = 1
 ```
+
+## Make NIC VLAN-aware
+
+In GUI: Server-name\Network\vmbr0, check VLAN aware
+
+## NIC Aggregation
+
+Add in the /etc/network/interfaces
+```
+iface bond0 inet manual
+  bond-slaves eno1 eno1
+  bond-miimon 100
+  bond-mode 802.3ad
+  bond-xmit-hash-policy layer2+3
+
+auto vmbr0
+iface vmbr0 inet static
+  address 192.168.1.123/24
+  gateway 192.168.1.1
+  bridge-ports bond0
+  bridge-stp off
+  bridge-fd 0
+  bridge-vlan-aware yes
+  bridge-vids 2-4094
+```
+
+Follow up on this with the switch configuration.
 
 ## Install ifupdown2
 
@@ -160,6 +192,32 @@ pch_cannonlake-virtual-0
 Adapter: Virtual device
 temp1:        +44.0°C  
 ```
+
+## PCI Pass Through Config
+
+Involves:
+
+* boot command line
+* kernel modules to load and blacklist
+
+See proxmox pci pass through notes.
+
+## Add the server to Datacenter/Cluster
+
+Makesure the host has:
+
+* unique host name
+* networking is defined
+* no VMs
+
+## Data Center Storage
+
+Add connection to the NFS server:  Datacenter\Storage Add NFS 
+
+## Schedule Backups
+
+Datacenter\Backup, Add
+
 
 ## Container Manipulation
 
