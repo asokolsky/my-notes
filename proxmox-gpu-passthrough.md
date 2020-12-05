@@ -179,24 +179,57 @@ Edit VM Hardware - set:
 * Machine: q35;
 * Add EFI disk;
 
-Then add PCIe GPU:
+Then add PCIe GPU - no need to add a separate PCIe device for audio, just choose all functions:
 
 * select GT710,
 * check allfunctions,
 * checl primary VGA, PCIe;
 * Did not add associated HDMI audio yet
 
-Connection to console did not work, so peripherals add: add USB port.
+Connection to console did not work, so peripherals - add USB port.
 
-
-Start VM.  The above change in BIOS rendered the HD unbootable - I reinstalled centos8.
-
-Then:
 ```
-root@fuji:~# qm monitor 200
-Entering Qemu Monitor for VM 200 - type 'help' for help
+root@duo:~# qm show 400 --pretty
+/usr/bin/kvm \
+  -id 400 \
+  -name htpc \
+  -no-shutdown \
+  -chardev 'socket,id=qmp,path=/var/run/qemu-server/400.qmp,server,nowait' \
+  -mon 'chardev=qmp,mode=control' \
+  -chardev 'socket,id=qmp-event,path=/var/run/qmeventd.sock,reconnect=5' \
+  -mon 'chardev=qmp-event,mode=control' \
+  -pidfile /var/run/qemu-server/400.pid \
+  -daemonize \
+  -smbios 'type=1,uuid=b4758fe0-99b5-4c8a-b371-545a4c550732' \
+  -drive 'if=pflash,unit=0,format=raw,readonly,file=/usr/share/pve-edk2-firmware//OVMF_CODE.fd' \
+  -drive 'if=pflash,unit=1,format=raw,id=drive-efidisk0,size=131072,file=/dev/pve/vm-400-disk-1' \
+  -smp '4,sockets=1,cores=4,maxcpus=4' \
+  -nodefaults \
+  -boot 'menu=on,strict=on,reboot-timeout=1000,splash=/usr/share/qemu-server/bootsplash.jpg' \
+  -vga none \
+  -nographic \
+  -cpu 'kvm64,enforce,kvm=off,+kvm_pv_eoi,+kvm_pv_unhalt,+lahf_lm,+sep' \
+  -m 8192 \
+  -readconfig /usr/share/qemu-server/pve-q35-4.0.cfg \
+  -device 'vmgenid,guid=859afcf5-a35b-4243-acec-1b3cb4da03c1' \
+  -device 'usb-tablet,id=tablet,bus=ehci.0,port=1' \
+  -device 'vfio-pci,host=0000:01:00.0,id=hostpci0.0,bus=ich9-pcie-port-1,addr=0x0.0,multifunction=on' \
+  -device 'vfio-pci,host=0000:01:00.1,id=hostpci0.1,bus=ich9-pcie-port-1,addr=0x0.1' \
+  -device 'usb-host,hostbus=1,hostport=1,id=usb0' \
+  -device 'usb-host,hostbus=1,hostport=2,id=usb1' \
+  -device 'virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3' \
+  -iscsi 'initiator-name=iqn.1993-08.org.debian:01:54856bfc519d' \
+  -drive 'if=none,id=drive-ide2,media=cdrom,aio=threads' \
+  -device 'ide-cd,bus=ide.1,unit=0,drive=drive-ide2,id=ide2,bootindex=101' \
+  -device 'virtio-scsi-pci,id=scsihw0,bus=pci.0,addr=0x5' \
+  -drive 'file=/dev/pve/vm-400-disk-0,if=none,id=drive-scsi0,format=raw,cache=none,aio=native,detect-zeroes=on' \
+  -device 'scsi-hd,bus=scsihw0.0,channel=0,scsi-id=0,lun=0,drive=drive-scsi0,id=scsi0,rotation_rate=1,bootindex=100' \
+  -netdev 'type=tap,id=net0,ifname=tap400i0,script=/var/lib/qemu-server/pve-bridge,downscript=/var/lib/qemu-server/pve-bridgedown,vhost=on' \
+  -device 'virtio-net-pci,mac=36:E7:45:23:9E:0D,netdev=net0,bus=pci.0,addr=0x12,id=net0,bootindex=102' \
+  -machine 'type=q35+pve0'
+root@duo:~# qm monitor 400
+Entering Qemu Monitor for VM 400 - type 'help' for help
 qm> info pci
-
 ```
 
 
