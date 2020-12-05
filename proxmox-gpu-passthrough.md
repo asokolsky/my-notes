@@ -235,9 +235,15 @@ Entering Qemu Monitor for VM 400 - type 'help' for help
 qm> info pci
 ```
 
-Problems with HDMI Audio:
+### Guest Problems with HDMI Audio
 
-* crackling/broken as in https://pve.proxmox.com/wiki/Pci_passthrough#HDMI_Audio_crackling.2Fbroken
-* after NVIDIA driver install - not appearing at all - possibly
+After NVIDIA driver install HDMI Audio was not appearing in the Settings/Sounds.
+This solved it:
+```
+pulseaudio -k
+```
 https://forum.proxmox.com/threads/gpu-passthrough-hdmi-audio.55740/
+
+After that (and before NVIDIA driver install) - crackling/broken as in
+https://pve.proxmox.com/wiki/Pci_passthrough#HDMI_Audio_crackling.2Fbroken
 
