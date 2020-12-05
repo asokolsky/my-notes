@@ -238,5 +238,6 @@ qm> info pci
 Problems with HDMI Audio:
 
 * crackling/broken as in https://pve.proxmox.com/wiki/Pci_passthrough#HDMI_Audio_crackling.2Fbroken
-* after NVIDIA driver install - not appearing at all
+* after NVIDIA driver install - not appearing at all - possibly
+https://forum.proxmox.com/threads/gpu-passthrough-hdmi-audio.55740/
 
