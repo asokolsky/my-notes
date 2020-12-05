@@ -174,11 +174,20 @@ options vfio-pci ids=10de:1d01,10de:0fb8
 
 Edit VM Hardware - set:
 
+* BIOS: OVMF;
+* Display: default
 * Machine: q35;
 * Add EFI disk;
-* BIOS: OVMF;
-* Add PCI device, select GT710, check allfunctions, primary VGA, PCIe;
+
+Then add PCIe GPU:
+
+* select GT710,
+* check allfunctions,
+* checl primary VGA, PCIe;
 * Did not add associated HDMI audio yet
+
+Connection to console did not work, so peripherals add: add USB port.
+
 
 Start VM.  The above change in BIOS rendered the HD unbootable - I reinstalled centos8.
 
