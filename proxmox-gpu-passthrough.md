@@ -182,11 +182,14 @@ Edit VM Hardware - set:
 Then add PCIe GPU - no need to add a separate PCIe device for audio, just choose all functions:
 
 * select GT710,
-* check allfunctions,
-* checl primary VGA, PCIe;
-* Did not add associated HDMI audio yet
+* check allfunctions (this will also result in the HDMI audio being passed through)
+* check primary VGA, PCIe;
 
-Connection to console did not work, so peripherals - add USB port.
+
+
+Once GPU passthrough is configures, proxmox console (novnc) stops functioning.
+You need to passthrough keyboard/mouse to the guest:
+https://pve.proxmox.com/wiki/USB_physical_port_mapping
 
 ```
 root@duo:~# qm show 400 --pretty
