@@ -63,7 +63,6 @@ root@fuji:~# dmesg | grep 'remapping'
 
 List PCI devices:
 ```
-root@fuji:~# 
 root@fuji:~# lspci
 00:00.0 Host bridge: Intel Corporation Xeon E3-1200 v6/7th Gen Core Processor Host Bridge/DRAM Registers (rev 05)
 00:01.0 PCI bridge: Intel Corporation Skylake PCIe Controller (x16) (rev 05)
@@ -88,31 +87,36 @@ root@fuji:~# lspci
 05:00.1 Ethernet controller: Intel Corporation I350 Gigabit Network Connection (rev 01)
 ```
 
-After VGA install:
+After VGA install and on another PC:
 ```
-root@fuji:~# lspci
-00:00.0 Host bridge: Intel Corporation Xeon E3-1200 v6/7th Gen Core Processor Host Bridge/DRAM Registers (rev 05)
-00:01.0 PCI bridge: Intel Corporation Skylake PCIe Controller (x16) (rev 05)
-00:14.0 USB controller: Intel Corporation Sunrise Point-H USB 3.0 xHCI Controller (rev 31)
-00:14.2 Signal processing controller: Intel Corporation Sunrise Point-H Thermal subsystem (rev 31)
-00:16.0 Communication controller: Intel Corporation Sunrise Point-H CSME HECI #1 (rev 31)
-00:16.1 Communication controller: Intel Corporation Sunrise Point-H CSME HECI #2 (rev 31)
-00:17.0 SATA controller: Intel Corporation Sunrise Point-H SATA controller [AHCI mode] (rev 31)
-00:1c.0 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #5 (rev f1)
-00:1c.5 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #6 (rev f1)
-00:1c.6 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #7 (rev f1)
-00:1c.7 PCI bridge: Intel Corporation Sunrise Point-H PCI Express Root Port #8 (rev f1)
-00:1f.0 ISA bridge: Intel Corporation Sunrise Point-H LPC Controller (rev 31)
-00:1f.2 Memory controller: Intel Corporation Sunrise Point-H PMC (rev 31)
-00:1f.4 SMBus: Intel Corporation Sunrise Point-H SMBus (rev 31)
-01:00.0 Non-Volatile memory controller: Phison Electronics Corporation E12 NVMe Controller (rev 01)
-02:00.0 Display controller: Emulex Corporation ServerView iRMC HTI (rev 05)
-02:00.1 Co-processor: Emulex Corporation ServerView iRMC HTI
-03:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
-04:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
-05:00.0 VGA compatible controller: NVIDIA Corporation GK208 [GeForce GT 710B] (rev a1)
-05:00.1 Audio device: NVIDIA Corporation GK208 HDMI/DP Audio Controller (rev a1)
+root@duo:~# lspci
+00:00.0 Host bridge: Intel Corporation 8th Gen Core Processor Host Bridge/DRAM Registers (rev 07)
+00:01.0 PCI bridge: Intel Corporation Skylake PCIe Controller (x16) (rev 07)
+00:02.0 Display controller: Intel Corporation UHD Graphics 630 (Desktop)
+00:14.0 USB controller: Intel Corporation 200 Series/Z370 Chipset Family USB 3.0 xHCI Controller
+00:14.2 Signal processing controller: Intel Corporation 200 Series PCH Thermal Subsystem
+00:16.0 Communication controller: Intel Corporation 200 Series PCH CSME HECI
+00:17.0 SATA controller: Intel Corporation 200 Series PCH SATA controller [AHCI mode]
+00:1c.0 PCI bridge: Intel Corporation 200 Series PCH PCI Express Root Port (rev f0)
+00:1c.5 PCI bridge: Intel Corporation 200 Series PCH PCI Express Root Port (rev f0)
+00:1d.0 PCI bridge: Intel Corporation 200 Series PCH PCI Express Root Port (rev f0)
+00:1f.0 ISA bridge: Intel Corporation Z370 Chipset LPC/eSPI Controller
+00:1f.2 Memory controller: Intel Corporation 200 Series/Z370 Chipset Family Power Management Controller
+00:1f.3 Audio device: Intel Corporation 200 Series PCH HD Audio
+00:1f.4 SMBus: Intel Corporation 200 Series/Z370 Chipset Family SMBus Controller
+00:1f.6 Ethernet controller: Intel Corporation Ethernet Connection (2) I219-V
+01:00.0 VGA compatible controller: NVIDIA Corporation GP108 (rev a1)
+01:00.1 Audio device: NVIDIA Corporation GP108 High Definition Audio Controller (rev a1)
+03:00.0 Ethernet controller: Intel Corporation I211 Gigabit Network Connection (rev 03)
+04:00.0 Non-Volatile memory controller: Sandisk Corp Device 5009 (rev 01)
+root@duo:~# lspci -n -s 01:00
+01:00.0 0300: 10de:1d01 (rev a1)
+01:00.1 0403: 10de:0fb8 (rev a1)
 ```
+
+The latter is important.  
+
+
 ## Blacklist Drivers
 
 Prevent host from using GT710:
@@ -151,6 +155,19 @@ root@fuji:~# find /sys/kernel/iommu_groups/ -type l
 /sys/kernel/iommu_groups/9/devices/0000:00:1f.2
 /sys/kernel/iommu_groups/9/devices/0000:00:1f.0
 /sys/kernel/iommu_groups/9/devices/0000:00:1f.4
+```
+
+Use vendor ids for the GPU determined before:
+
+```
+root@duo:~# lspci -n -s 01:00
+01:00.0 0300: 10de:1d01 (rev a1)
+01:00.1 0403: 10de:0fb8 (rev a1)
+root@duo:~# cat /etc/modprobe.d/vfio.conf
+cat: /etc/modprobe.d/vfio.conf: No such file or directory
+root@duo:~# echo "options vfio-pci ids=10de:1d01,10de:0fb8" > /etc/modprobe.d/vfio.conf
+root@duo:~# cat /etc/modprobe.d/vfio.conf
+options vfio-pci ids=10de:1d01,10de:0fb8
 ```
 
 # VM Configuration
