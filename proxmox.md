@@ -214,6 +214,10 @@ Makesure the host has:
 
 Add connection to the NFS server:  Datacenter\Storage Add NFS 
 
+## Configure UPS
+
+https://diyblindguy.com/howto-configure-ups-on-proxmox/
+
 ## Schedule Backups
 
 Datacenter\Backup, Add
@@ -237,4 +241,5 @@ Start and enter into a container (without password):
  pveam available
  pveam download local ubuntu-18.10-standard_18.10-2_amd64.tar.gz
 ```
+
 
