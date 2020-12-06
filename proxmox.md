@@ -200,14 +200,14 @@ Involves:
 * boot command line
 * kernel modules to load and blacklist
 
-See proxmox pci pass through notes.
+See [proxmox-gpu-passthrough.md](proxmox-gpu-passthrough.md).
 
 ## Add the server to Datacenter/Cluster
 
-Makesure the host has:
+Make sure the host has:
 
 * unique host name
-* networking is defined
+* networking is defined - can't change after
 * no VMs
 
 ## Data Center Storage
@@ -216,7 +216,7 @@ Add connection to the NFS server:  Datacenter\Storage Add NFS
 
 ## Configure UPS
 
-https://diyblindguy.com/howto-configure-ups-on-proxmox/
+[howto-configure-ups-on-proxmox](https://diyblindguy.com/howto-configure-ups-on-proxmox/)
 
 ## Schedule Backups
 
