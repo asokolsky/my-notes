@@ -11,6 +11,7 @@ More:
 
   * https://quickpacket.com/billing/knowledgebase/20/Supermicro-Server-Remote-Access-via-IPMItool.html
   * https://docs.oracle.com/cd/E19464-01/820-6850-11/IPMItool.html
+  * https://www.thomas-krenn.com/de/wiki/Ipmitool_zur_Sensorabfrage_von_Servern_nutzen
 
 Playing with ipmitool:
 
