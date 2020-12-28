@@ -8,8 +8,9 @@ ipmitool -I lan -U ADMIN -H 10.0.0.4 sensor thresh FAN1 lower 150 225 300
 ```
 
 More:
-https://quickpacket.com/billing/knowledgebase/20/Supermicro-Server-Remote-Access-via-IPMItool.html
-https://docs.oracle.com/cd/E19464-01/820-6850-11/IPMItool.html
+
+  * https://quickpacket.com/billing/knowledgebase/20/Supermicro-Server-Remote-Access-via-IPMItool.html
+  * https://docs.oracle.com/cd/E19464-01/820-6850-11/IPMItool.html
 
 Playing with ipmitool:
 
