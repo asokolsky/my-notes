@@ -4,6 +4,7 @@ Sources:
 
 * https://www.youtube.com/watch?v=FiZDit-xNvk
 * https://proxmox-openvz.blogspot.com/2019/09/installing-ubiquiti-unifi-controller-as.html
+* https://pve.proxmox.com/wiki/Command_line_tools
 
 ## Download container template
 
