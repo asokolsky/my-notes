@@ -296,3 +296,20 @@ Just make sure that:
 root@duo:~# cat /sys/devices/system/cpu/intel_pstate/no_turbo 
 0
 ```
+
+## Enable Power Saving
+
+From https://forum.proxmox.com/threads/cpu-power-throttle-back-to-save-energy.27510/
+
+To enable powersave governor:
+
+```
+% echo "powersave" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+```
+
+To monitor CPU frequency:
+
+```
+% cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq
+```
+
