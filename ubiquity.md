@@ -20,4 +20,3 @@ In order for DNS to resolve LAN computers registered via DHCP:
 
 * enable DNS masquarading in DHCP server settings
 * use localdomain for domain in DHCP and in System tab
-
